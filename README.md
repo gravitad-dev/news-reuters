@@ -1,1 +1,1 @@
-# news-proxy-two
+# news-api
