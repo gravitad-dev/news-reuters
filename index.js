@@ -31,7 +31,7 @@ app.get("/web", async (req, res) => {
     const response = await axios.get("https://news-proxy-two.vercel.app/");
     const $ = cheerio.load(response.data);
     //$(".ad").remove(); // Eliminar todos los elementos con la clase 'clase-a-eliminar' del DOM
-    //$(".ad-giga").remove();
+    $(".ad-slot__container__FEnoz").remove();
     res.send($.html());
   } catch (error) {
     res.send(`Error: ${error.message}`);
