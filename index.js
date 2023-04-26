@@ -1,3 +1,4 @@
+/*
 const express = require("express");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const axios = require("axios");
@@ -43,4 +44,49 @@ app.use("/", corsProxy);
 
 app.listen(3000, () => {
   console.log("Server start on port 3000");
+});
+*/
+
+const express = require("express");
+const { createProxyMiddleware } = require("http-proxy-middleware");
+const axios = require("axios");
+const cheerio = require("cheerio");
+const cors = require("cors");
+
+const app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+
+// Crear una instancia de proxy utilizando http-proxy-middleware
+const apiProxy = createProxyMiddleware("/", {
+  target: "http://www.reuters.com/",
+  changeOrigin: true,
+});
+
+// Agregar el middleware de proxy a la aplicación Express
+app.use("/business", apiProxy);
+
+// Manejar solicitudes de raíz para indicar que el servidor está funcionando
+app.get("/", (req, res) => {
+  res.send("El servidor proxy inverso está en línea!");
+});
+
+// Ruta original sin el proxy inverso
+app.get("/web", async (req, res) => {
+  try {
+    const response = await axios.get("http://localhost:4000/business");
+    const $ = cheerio.load(response.data);
+    //$(".ad").remove(); // Eliminar todos los elementos con la clase 'clase-a-eliminar' del DOM
+    $(".ad-slot__container__FEnoz").remove();
+    res.send($.html());
+  } catch (error) {
+    res.send(`Error: ${error.message}`);
+  }
+});
+
+// Iniciar el servidor Express en el puerto 4000
+app.listen(4000, () => {
+  console.log(
+    "El servidor proxy inverso está en línea en http://localhost:4000"
+  );
 });
