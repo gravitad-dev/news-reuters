@@ -59,12 +59,12 @@ app.use(cors());
 
 // Crear una instancia de proxy utilizando http-proxy-middleware
 const apiProxy = createProxyMiddleware("/", {
-  target: "http://www.reuters.com/",
+  target: "https://www.reuters.com",
   changeOrigin: true,
 });
 
 // Agregar el middleware de proxy a la aplicación Express
-app.use("/business", apiProxy);
+app.use("/", apiProxy);
 
 // Manejar solicitudes de raíz para indicar que el servidor está funcionando
 app.get("/", (req, res) => {
@@ -72,12 +72,18 @@ app.get("/", (req, res) => {
 });
 
 // Ruta original sin el proxy inverso
-app.get("/web", async (req, res) => {
+app.get("/business", async (req, res) => {
   try {
-    const response = await axios.get("http://localhost:4000/business");
+    const response = await axios.get("https://www.reuters.com");
     const $ = cheerio.load(response.data);
     //$(".ad").remove(); // Eliminar todos los elementos con la clase 'clase-a-eliminar' del DOM
     $(".ad-slot__container__FEnoz").remove();
+
+    // Agregar encabezados a la respuesta
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+    res.set("Access-Control-Allow-Headers", "Content-Type");
+
     res.send($.html());
   } catch (error) {
     res.send(`Error: ${error.message}`);
