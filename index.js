@@ -1,5 +1,7 @@
 const express = require("express");
 const { createProxyMiddleware } = require("http-proxy-middleware");
+const axios = require("axios");
+const cheerio = require("cheerio");
 const cors = require("cors");
 
 const app = express();
@@ -21,6 +23,19 @@ const corsProxy = createProxyMiddleware({
     proxyRes.headers["access-control-allow-origin"] = "*";
     proxyRes.headers["access-control-allow-credentials"] = "true";
   },
+});
+
+// Ruta original sin el proxy inverso
+app.get("/web", async (req, res) => {
+  try {
+    const response = await axios.get("https://news-proxy-two.vercel.app/");
+    const $ = cheerio.load(response.data);
+    //$(".ad").remove(); // Eliminar todos los elementos con la clase 'clase-a-eliminar' del DOM
+    //$(".ad-giga").remove();
+    res.send($.html());
+  } catch (error) {
+    res.send(`Error: ${error.message}`);
+  }
 });
 
 //app
