@@ -56,6 +56,7 @@ const cors = require("cors");
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+//app.use(corsAnywhere());
 
 // Crear una instancia de proxy utilizando http-proxy-middleware
 const apiProxy = createProxyMiddleware("/", {
@@ -74,10 +75,9 @@ app.get("/", (req, res) => {
 // Ruta original sin el proxy inverso
 app.get("/business", async (req, res) => {
   try {
-    const response = await axios.get("https://www.reuters.com");
+    const response = await axios.get("https://news-proxy-two.vercel.app");
     const $ = cheerio.load(response.data);
-    //$(".ad").remove(); // Eliminar todos los elementos con la clase 'clase-a-eliminar' del DOM
-    $(".ad-slot__container__FEnoz").remove();
+    $("leaderboard__container__2MbZl").remove();
 
     // Agregar encabezados a la respuesta
     res.set("Access-Control-Allow-Origin", "*");
