@@ -7,20 +7,35 @@
     <title>Document</title>
 
     <style type="text/css">
+      * {
+        padding: 0;
+        margin: 0;
+      }
       .myframe {
         width: 100%;
-        height: 800px;
+        height: 80vh;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+      }
+      .title {
+        width: 100%;
+        height: 20vh;
+        background: red;
       }
     </style>
   </head>
   <body>
-    <h1>test</h1>
-    <iframe
-      class="myframe"
-      src="https://news-proxy-two.vercel.app/business"
-      width="100"
-      height="100"
-      frameborder="0"
-    ></iframe>
+    <div class="container">
+      <div class="title"><h1>test</h1></div>
+      <iframe
+        class="myframe"
+        src="/business"
+        width="100"
+        height="100"
+        frameborder="0"
+      ></iframe>
+    </div>
   </body>
 </html>

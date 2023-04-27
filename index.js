@@ -3,7 +3,10 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const app = express();
 
-app.use(express.static("public"));
+app.use("/", express.static(__dirname + "/public"));
+app.get("/", async (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 const apiProxy1 = createProxyMiddleware("/", {
   target: "https://www.reuters.com",
