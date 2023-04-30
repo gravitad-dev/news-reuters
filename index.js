@@ -7,15 +7,21 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 app.options("*", cors());
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
 
-app.use("/", express.static(__dirname + "/public/index.html"));
+app.use("/", express.static(__dirname + "/views/index.html"));
 app.get("/", async (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
+  res.sendFile(__dirname + "/views/index.html");
 });
 
-app.use("/news", express.static(__dirname + "/public/news.html"));
+app.use("/news", express.static(__dirname + "/views/news.html"));
 app.get("/news", async (req, res) => {
-  res.sendFile(__dirname + "/public/news.html");
+  const datos = {
+    variable1: "valor1",
+    variable2: "valor2",
+  };
+  res.render(__dirname + "/views/news.html", { datos });
 });
 
 const apiProxy1 = createProxyMiddleware("/", {

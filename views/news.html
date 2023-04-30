@@ -24,12 +24,16 @@
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: 16vh;
+        max-height: 16vh;
         background-color: #f4f4f4;
+      }
+      .dynamic-content-img {
+        object-fit: scale-down;
+        width: auto;
       }
       @media only screen and (max-width: 600px) {
         .dynamic-content {
-          height: 12vh;
+          max-height: 12vh;
         }
         .aplication {
           width: 100%;
@@ -41,7 +45,13 @@
   <body>
     <div class="container">
       <div class="dynamic-content">
-        <div class="">asd</div>
+        <div class="dynamic-content-img">
+          <img
+            src="https://png.pngtree.com/thumb_back/fh260/background/20190223/ourmid/pngtree-simple-gradient-technology-banner-background-material-backgroundsimplegeneral-backgroundtechnology-background-image_85451.jpg"
+            alt=""
+            srcset=""
+          />
+        </div>
       </div>
       <iframe
         class="aplication"
