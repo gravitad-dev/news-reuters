@@ -13,16 +13,36 @@
       }
       .aplication {
         width: 100%;
-        height: 100vh;
+        height: 84vh;
       }
       .container {
         display: flex;
         flex-direction: column;
       }
+      .dynamic-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 16vh;
+        background-color: #f4f4f4;
+      }
+      @media only screen and (max-width: 600px) {
+        .dynamic-content {
+          height: 12vh;
+        }
+        .aplication {
+          width: 100%;
+          height: 88vh;
+        }
+      }
     </style>
   </head>
   <body>
     <div class="container">
+      <div class="dynamic-content">
+        <div class="">asd</div>
+      </div>
       <iframe
         class="aplication"
         src="/business"
