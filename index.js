@@ -25,20 +25,20 @@ app.get("/news", async (req, res) => {
 });
 
 const apiProxy1 = createProxyMiddleware("/", {
-  target: "https://www.reuters.com",
+  target: "https://elpais.com/",
   changeOrigin: true,
 });
 
-const apiProxy2 = createProxyMiddleware("/business", {
-  target: "https://www.reuters.com",
+const apiProxy2 = createProxyMiddleware("/2", {
+  target: "https://elpais.com/",
   changeOrigin: true,
 });
 
 app.get("/noadd", async (req, res) => {
   try {
-    const response = await axios.get(`http://localhost:3000/business`);
+    const response = await axios.get(`http://localhost:4001/business/`);
     const $ = cheerio.load(response.data);
-    $(".ad-slot__container__FEnoz").remove(); // Eliminar todos los elementos con la clase 'clase-a-eliminar' del DOM
+    $(".leaderboard__container__2MbZl").remove(); // Eliminar todos los elementos con la clase 'clase-a-eliminar' del DOM
     res.send($.html());
   } catch (error) {
     res.send(`Error: ${error.message}`);
@@ -48,7 +48,7 @@ app.get("/noadd", async (req, res) => {
 app.use(apiProxy1);
 app.use(apiProxy2);
 
-const PORT = 3000;
+const PORT = 4001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
