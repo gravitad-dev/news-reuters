@@ -3,6 +3,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const cors = require("cors");
+let dotenv = require("dotenv").config();
 
 const app = express();
 app.use(cors());
@@ -24,13 +25,14 @@ app.get("/news", async (req, res) => {
   res.render(__dirname + "/views/news.html", { datos });
 });
 
+//-----------------------------------------------------------------------
 const apiProxy1 = createProxyMiddleware("/", {
-  target: "https://elpais.com/",
+  target: process.env.WEB_URL,
   changeOrigin: true,
 });
 
 const apiProxy2 = createProxyMiddleware("/2", {
-  target: "https://elpais.com/",
+  target: process.env.WEB_URL,
   changeOrigin: true,
 });
 
