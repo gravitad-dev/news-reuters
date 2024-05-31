@@ -50,7 +50,8 @@ app.get("/noadd", async (req, res) => {
 app.use(apiProxy1);
 app.use(apiProxy2);
 
-const PORT = 4001;
+const PORT = process.env.PORT
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
